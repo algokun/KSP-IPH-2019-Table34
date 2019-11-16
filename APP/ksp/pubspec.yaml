@@ -28,6 +28,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/bg.jpg
+    - assets/seal.png
   fonts:
     - family: WorkSans
       fonts:

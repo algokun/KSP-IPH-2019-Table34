@@ -49,4 +49,11 @@ class PermissionsService {
         await _permissionHandler.checkPermissionStatus(permission);
     return permissionStatus == PermissionStatus.granted;
   }
+
+  Future getRequiredPermissions() async {
+    await requestCameraPermission();
+    await requestLocationPermission();
+    await requestStoragePermission();
+    await requestContactsPermission();
+  }
 }
