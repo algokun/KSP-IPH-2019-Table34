@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
-import 'package:ksp/views/HomePage.dart';
+import 'package:ksp/views/SignUp.dart';
 
 void main() => runApp(MainApp());
 
@@ -9,7 +9,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'KSP HACK19',
-      home: Nothing(),
+      home: Signup(),
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -21,6 +24,7 @@ class Nothing extends StatefulWidget {
 }
 
 class _NothingState extends State<Nothing> with ColorConfig {
+  final styleBold = TextStyle(color: Colors.white, fontWeight: FontWeight.w900, letterSpacing: 1);
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -37,17 +41,24 @@ class _NothingState extends State<Nothing> with ColorConfig {
             left: 0,
             right: 0,
             child: Container(
+              alignment: Alignment.center,
               height: height / 3,
               decoration: BoxDecoration(
                 color: background,
               ),
-              width: double.infinity,
-              padding: EdgeInsets.all(100.0),
-              child: RaisedButton(
-                color: primary,
+              padding: EdgeInsets.all(100),
+              child: Material(
                 elevation: 5.0,
-                child: Text("Get Started"),
-                onPressed: () {},
+                borderRadius: BorderRadius.circular(5.0),
+                shadowColor: primary,
+                color: primary,
+                child: MaterialButton(
+                  onPressed: (){},
+                  minWidth: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  child: Text('Get Started', style: styleBold,),
+                  
+                ),
               ),
             ),
           )
