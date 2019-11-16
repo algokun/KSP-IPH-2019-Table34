@@ -144,6 +144,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0+1"
+<<<<<<< HEAD
   petitparser:
     dependency: transitive
     description:
@@ -151,6 +152,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+=======
+  permission_handler:
+    dependency: "direct main"
+    description:
+      name: permission_handler
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
+>>>>>>> 82e553fbf10a4488265c919d8617f35839ce74de
   platform:
     dependency: transitive
     description:
