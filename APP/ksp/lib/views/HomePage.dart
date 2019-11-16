@@ -8,6 +8,9 @@ import 'package:ksp/utils/fcm.dart';
 import 'package:ksp/views/ChatHome.dart';
 import 'package:provider/provider.dart';
 
+import 'CreateChat.dart';
+import 'SecureChat.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,6 +23,7 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
     initialPage: 0,
     keepPage: true,
   );
+  String _selected = "";
 
   @override
   void initState() {
@@ -36,18 +40,54 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
   @override
   Widget build(BuildContext context) {
     FirebaseUser user = Provider.of<FirebaseUser>(context);
-    
+
     firebaseMessaging.getToken().then((token) {
       Firestore.instance
           .collection("tokens")
           .document(user.uid)
           .setData({'fcmToken': token});
     });
-    
+
     return Scaffold(
         backgroundColor: background,
         appBar: AppBar(
           title: Text("Home"),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              color: lowContrast,
+              onSelected: (String value) {
+                setState(() {
+                  _selected = value;
+                });
+                switch (value) {
+                  case 'NEW_CHAT':
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (_) => CreateChat()));
+                    break;
+                  case 'NEW_SECURE_CHAT':
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (_) => SecureChat()));
+                    break;
+                  default:
+                    
+                }
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
+                  value: 'NEW_CHAT',
+                  child: Text('New Chat'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'NEW_SECURE_CHAT',
+                  child: Text('New Secure Chat'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'SETTING',
+                  child: Text('Settings'),
+                ),
+              ],
+            )
+          ],
         ),
         body: PageView(
           controller: _pageController,

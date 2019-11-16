@@ -21,8 +21,14 @@ class _ChatHomeState extends State<ChatHome> with ColorConfig {
   }
 
   Widget _buildBody(BuildContext context) {
+    FirebaseUser user = Provider.of<FirebaseUser>(context);
+    var uid = user.uid;
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('users').snapshots(),
+      stream: Firestore.instance
+          .collection('chats')
+          .document(uid)
+          .collection("users")
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 

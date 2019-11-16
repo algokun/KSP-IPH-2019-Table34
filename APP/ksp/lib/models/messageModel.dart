@@ -2,9 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageModel {
   final String idFrom, idTo, type, content, timeStamp;
+  final bool isSecure;
 
   MessageModel(
-      {this.idFrom, this.idTo, this.type, this.content, this.timeStamp});
+      {this.idFrom,
+      this.idTo,
+      this.type,
+      this.content,
+      this.timeStamp,
+      this.isSecure});
 
   factory MessageModel.fromSnapShot(DocumentSnapshot snapshot) {
     return MessageModel(
@@ -13,6 +19,7 @@ class MessageModel {
       idTo: snapshot.data['idTo'],
       timeStamp: snapshot.data['timeStamp'],
       type: snapshot.data['type'],
+      isSecure: snapshot.data['isSecure'] ?? false,
     );
   }
 
@@ -23,6 +30,7 @@ class MessageModel {
       "idTo": idTo,
       "timeStamp": timeStamp,
       "type": type,
+      "isSecure": isSecure ?? false
     };
   }
 }

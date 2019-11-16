@@ -6,15 +6,15 @@ import 'package:ksp/models/messageModel.dart';
 import 'package:ksp/views/Message.dart';
 import 'package:provider/provider.dart';
 
-class ChatScreen extends StatefulWidget {
+class SecureChatScreen extends StatefulWidget {
   final String peerId, name;
 
-  const ChatScreen({Key key, this.peerId, this.name}) : super(key: key);
+  const SecureChatScreen({Key key, this.peerId, this.name}) : super(key: key);
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _SecureChatScreenState createState() => _SecureChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> with ColorConfig {
+class _SecureChatScreenState extends State<SecureChatScreen> with ColorConfig {
   String uid;
   TextEditingController controller;
   ScrollController _scrollController;
@@ -81,9 +81,10 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
           )),
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
-            .collection("messages")
+            .collection("secure_chat")
             .document(getHashId())
             .collection("chats")
+            .where('isSecure', isEqualTo: true)
             .orderBy('timeStamp', descending: false)
             .snapshots(),
         builder: (context, snapshot) {
@@ -146,6 +147,7 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
         content: controller.text,
         type: '0',
         idFrom: uid,
+        isSecure: true,
         idTo: widget.peerId,
         timeStamp: DateTime.now().toString());
 
@@ -154,8 +156,16 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
         .document(getHashId())
         .collection("chats")
         .add(message.toMap())
-        .then((_) {
+        .then((_) async {
       controller.text = "";
+      await Firestore.instance
+          .collection("secure_chat")
+          .document(getHashId())
+          .collection("chats")
+          .add(message.toMap())
+          .then((_) {
+        controller.text = "";
+      });
     });
   }
 }
