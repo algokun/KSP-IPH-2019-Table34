@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ksp/utils/userRepo.dart';
+import 'package:ksp/views/LoginPage.dart';
+import 'package:ksp/views/Splash.dart';
+import 'package:ksp/views/UserInfo.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,7 +14,7 @@ class HomePage extends StatelessWidget {
         builder: (context, UserRepository user, _) {
           switch (user.status) {
             case Status.Uninitialized:
-              return Splash();
+              return SplashScreen();
             case Status.Unauthenticated:
             case Status.Authenticating:
               return LoginPage();
