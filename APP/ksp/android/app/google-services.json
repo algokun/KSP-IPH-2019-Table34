@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "111207225665",
+    "firebase_url": "https://ksp-hack19.firebaseio.com",
+    "project_id": "ksp-hack19",
+    "storage_bucket": "ksp-hack19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111207225665:android:d7b8ccec9eb42cea95e9c0",
+        "android_client_info": {
+          "package_name": "com.example.ksp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111207225665-cu74cqi0ec7eg4dshqdg7gbtk0ueo6ka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIO2p1ZXNgbEa5aV-WPu1VSYSevYrq7mM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111207225665-cu74cqi0ec7eg4dshqdg7gbtk0ueo6ka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
