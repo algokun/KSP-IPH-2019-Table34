@@ -15,15 +15,32 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
 
   TextEditingController profileName;
   TextEditingController address;
-  TextEditingController phone;
-  TextEditingController age;
+  TextEditingController phoneController;
+  String userRole;
+
+  List<String> userRoles = [
+    "DGP",
+    "ADGP",
+    "IGP",
+    "DIGP",
+    "DCP",
+    "SP",
+    "ASP",
+    "DSP",
+    "POLICE_INSPECTOR",
+    "ASSISTANT_POLICE_INSPECTOR",
+    "POLICE_SUB_INSPECTOR",
+    "ASSISTANT_POLICE_SUB_INSPECTOR",
+    "HEAD_CONSTABLE",
+    "POLICE_CONSTABLE",
+  ];
 
   static final _formKey = GlobalKey<FormState>();
   static final _key = GlobalKey<ScaffoldState>();
 
   void initState() {
     profileName = TextEditingController();
-    phone = TextEditingController();
+    phoneController = TextEditingController();
     super.initState();
   }
 
@@ -43,73 +60,103 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
           fontFamily: 'WorkSans',
           fontWeight: FontWeight.bold),
     );
-    final profilename = TextFormField(
-      controller: profileName,
-      validator: (String val) {
-        if(val.isEmpty){
-          return 'Please Enter your name';
-        }else if(val.contains('@')){
-          return 'Please Check your name..! It is invalid';
-        }else{
-          return null;
-        }
-      },
-      decoration: new InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        border: new OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(5.0),
-          borderSide: new BorderSide(color: Colors.white),
-        ),
-        hintText: 'Enter Your name',
-        labelText: 'Profile Name',
-        labelStyle: TextStyle(color: Colors.white)
-      ),
-    );
-    final age = TextFormField(
-      controller: profileName,
-      validator: (String val) {
-        if(val.isEmpty){
-          return 'Please Enter your age';
-        }else{
-          return null;
-        }
-      },
-      decoration: new InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        border: new OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(5.0),
-          borderSide: new BorderSide(color: Colors.white),
-        ),
-        hintText: 'Enter your Mobile Number',
-        labelText: 'Phone',
-        labelStyle: TextStyle(color: Colors.white)
-      ),
-    );
-    final signUpButton =  Material(
-            elevation: 5.0,
-            borderRadius: BorderRadius.circular(5.0),
-            color: Color(0xFFFF9800),
-            child: MaterialButton(
-              minWidth: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              onPressed: (){},
-              child: Text(
-                'Update Profile',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontFamily: 'WorkSans', fontSize: 15, fontWeight: FontWeight.bold ),
+    final profilename = Container(
+        decoration: BoxDecoration(
+            color: lowContrast, borderRadius: BorderRadius.circular(5.0)),
+        child: TextFormField(
+          controller: profileName,
+          validator: (String val) {
+            if (val.isEmpty) {
+              return 'Please Enter your name';
+            } else if (val.contains('@')) {
+              return 'Please Check your name..! It is invalid';
+            } else {
+              return null;
+            }
+          },
+          decoration: new InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+              border: new OutlineInputBorder(
+                borderRadius: new BorderRadius.circular(5.0),
+                borderSide: new BorderSide(color: Colors.white),
               ),
-            ),
-          );
-
+              hintText: 'Enter Your name',
+              labelText: 'Profile Name',
+              labelStyle: TextStyle(color: Colors.white)),
+        ));
+    final phone = Container(
+        decoration: BoxDecoration(
+            color: lowContrast, borderRadius: BorderRadius.circular(5.0)),
+        child: TextFormField(
+          maxLength: 10,
+          controller: phoneController,
+          validator: (String val) {
+            if (val.isEmpty) {
+              return 'Please Enter your number';
+            } else {
+              return null;
+            }
+          },
+          decoration: new InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+              border: new OutlineInputBorder(
+                borderRadius: new BorderRadius.circular(5.0),
+                borderSide: new BorderSide(color: Colors.white),
+              ),
+              hintText: 'Enter your Mobile Number',
+              labelText: 'Phone',
+              labelStyle: TextStyle(color: Colors.white)),
+        ));
+    final signUpButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(5.0),
+      color: Color(0xFFFF9800),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          if (_formKey.currentState.validate()) {
+            createProfile();
+          }
+        },
+        child: Text(
+          'Update Profile',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'WorkSans',
+              fontSize: 15,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+    final userRoleSelect = DropdownButton<String>(
+      value: userRole,
+      icon: Icon(Icons.arrow_downward),
+      iconSize: 20.0,
+      elevation: 6,
+      hint: Text("Choose Your Role"),
+      items: userRoles.map((String value) {
+        return new DropdownMenuItem<String>(
+          value: value,
+          child: new Text(value),
+        );
+      }).toList(),
+      onChanged: (newValue) {
+        setState(() {
+          userRole = newValue;
+        });
+      },
+    );
     List<Widget> list2 = [
       buildProfile,
       profilename,
-      age,
+      phone,
+      userRoleSelect,
       signUpButton,
     ];
     return Scaffold(
       key: _key,
-      
       backgroundColor: background,
       appBar: AppBar(
         title: Text("Create Profile"),
@@ -119,14 +166,13 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
       body: Form(
         key: _formKey,
         child: Center(
-          
           child: ListView.separated(
             padding: EdgeInsets.all(30.0),
             itemCount: list2.length,
-            itemBuilder: (context, index){
+            itemBuilder: (context, index) {
               return list2[index];
             },
-            separatorBuilder: (context, index){
+            separatorBuilder: (context, index) {
               return SizedBox(
                 height: 25,
               );
@@ -138,13 +184,16 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
     );
   }
 
-  createProfile() {
+  createProfile() async{
     FirebaseUser user = Provider.of<FirebaseUser>(context);
     UserUpdateInfo info = UserUpdateInfo();
     info.displayName = "name";
     info.photoUrl = "phone";
-    user.updateProfile(info);
-    Profile(context).createProfile(ProfileModel(
-        name: 'NAME', phone: 'PHONE', uid: user.uid, userRole: 'ROlE'));
+    await user.updateProfile(info);
+    await Profile(context).createProfile(ProfileModel(
+        name: profileName.text,
+        phone: phoneController.text,
+        uid: user.uid,
+        userRole: 'ROlE'));
   }
 }

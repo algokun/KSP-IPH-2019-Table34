@@ -1,6 +1,8 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
+import 'package:ksp/views/ChatHome.dart';
+import 'package:ksp/views/ChatScreen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -33,11 +35,9 @@ class _HomePageState extends State<HomePage> with ColorConfig {
             pageChanged(index);
           },
           children: <Widget>[
+            ChatHome(),
             Container(
-              child: Text("Hello"),
-            ),
-            Container(
-              child: Text("World"),
+              child: Text("Its me"),
             ),
             Container(
               child: Text("Its me"),
@@ -60,18 +60,18 @@ class _HomePageState extends State<HomePage> with ColorConfig {
             BottomNavyBarItem(
               icon: Icon(Icons.apps),
               title: Text('Home'),
-              activeColor: Colors.red,
+              activeColor: Colors.white,
             ),
             BottomNavyBarItem(
                 icon: Icon(Icons.people),
                 title: Text('Users'),
                 activeColor: Colors.purpleAccent),
             BottomNavyBarItem(
-                icon: Icon(Icons.message),
-                title: Text('Messages'),
+                icon: Icon(Icons.notifications),
+                title: Text('Notifications'),
                 activeColor: Colors.pink),
             BottomNavyBarItem(
-                icon: Icon(Icons.settings),
+                icon: Icon(Icons.track_changes),
                 title: Text('Settings'),
                 activeColor: Colors.blue),
           ],

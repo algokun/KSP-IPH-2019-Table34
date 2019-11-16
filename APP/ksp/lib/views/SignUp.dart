@@ -29,8 +29,6 @@ class _SignupPageState extends State<SignupPage> with ColorConfig {
 
   TextEditingController email, password;
   TextStyle textform = TextStyle(fontSize: 10.0, fontFamily: 'WorkSans');
-
-  static final _formKey = GlobalKey<FormState>();
   static final _key = GlobalKey<ScaffoldState>();
 
   void initState() {

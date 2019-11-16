@@ -20,7 +20,7 @@ dependencies:
   permission_handler: ^4.0.0
   rxdart: ^0.22.6
   bottom_navy_bar: ^5.2.0
-  agora_rtc_engine: ^1.0.1
+  file_picker: ^1.4.2
 
 dev_dependencies:
   flutter_test:

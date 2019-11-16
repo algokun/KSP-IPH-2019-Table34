@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/views/CreateProfile.dart';
+import 'package:ksp/views/GetStarted.dart';
 import 'package:ksp/views/HomePage.dart';
-import 'package:ksp/views/LoginPage.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> with ColorConfig {
 
   gotoLogin() {
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => GetStarted()));
   }
 
   gotoProfile() {
