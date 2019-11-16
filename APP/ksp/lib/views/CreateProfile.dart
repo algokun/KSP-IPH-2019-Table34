@@ -11,8 +11,6 @@ class CreateProfile extends StatefulWidget {
 }
 
 class _CreateProfileState extends State<CreateProfile> with ColorConfig {
-<<<<<<< HEAD
-=======
   int groupvalue;
 
   TextEditingController profileName;
@@ -35,7 +33,6 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
     });
   }
 
->>>>>>> 114796f33dcdd4629cd3c4afbbc257655fd728e7
   @override
   Widget build(BuildContext context) {
     final buildProfile = Text(
@@ -140,7 +137,6 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
       ),
     );
   }
-<<<<<<< HEAD
 
   createProfile() {
     FirebaseUser user = Provider.of<FirebaseUser>(context);
@@ -151,6 +147,4 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
     Profile(context).createProfile(ProfileModel(
         name: 'NAME', phone: 'PHONE', uid: user.uid, userRole: 'ROlE'));
   }
-=======
->>>>>>> 114796f33dcdd4629cd3c4afbbc257655fd728e7
 }
