@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/models/profileModel.dart';
-import 'package:ksp/views/ChatScreen.dart';
-import 'package:ksp/views/SecureChatScreen.dart';
 import 'package:provider/provider.dart';
+
+import 'SecureChatScreen.dart';
 
 class SecureChatHome extends StatefulWidget {
   @override

@@ -3,13 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/utils/fcm.dart';
-import 'package:ksp/views/ChatHome.dart';
+import 'package:ksp/views/SecureChat/SecureChat.dart';
 import 'package:provider/provider.dart';
 
-import 'CreateChat.dart';
-import 'SecureChat.dart';
+import 'Chats/ChatHome.dart';
+import 'Chats/CreateChat.dart';
+import 'package:local_auth/local_auth.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,6 +25,7 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
     initialPage: 0,
     keepPage: true,
   );
+  LocalAuthentication localAuthentication = LocalAuthentication();
   String _selected = "";
 
   @override
@@ -53,39 +56,10 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
         appBar: AppBar(
           title: Text("Home"),
           actions: <Widget>[
-            PopupMenuButton<String>(
-              color: lowContrast,
-              onSelected: (String value) {
-                setState(() {
-                  _selected = value;
-                });
-                switch (value) {
-                  case 'NEW_CHAT':
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => CreateChat()));
-                    break;
-                  case 'NEW_SECURE_CHAT':
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => SecureChat()));
-                    break;
-                  default:
-                    
-                }
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: 'NEW_CHAT',
-                  child: Text('New Chat'),
-                ),
-                const PopupMenuItem<String>(
-                  value: 'NEW_SECURE_CHAT',
-                  child: Text('New Secure Chat'),
-                ),
-                const PopupMenuItem<String>(
-                  value: 'SETTING',
-                  child: Text('Settings'),
-                ),
-              ],
+            FlatButton.icon(
+              label: Text("Secure Chat"),
+              icon: Icon(Icons.lock),
+              onPressed: openSecureChat,
             )
           ],
         ),
@@ -106,6 +80,14 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
               child: Text("Mohan"),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          tooltip: 'Create Chat',
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => CreateChat()));
+          },
         ),
         bottomNavigationBar: BottomNavyBar(
           backgroundColor: lowContrast,
@@ -142,5 +124,19 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  openSecureChat() async {
+    try {
+      bool didAuthenticate =
+          await localAuthentication.authenticateWithBiometrics(
+              localizedReason: 'Please authenticate to show account balance');
+      if (didAuthenticate) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => SecureChat()));
+      }
+    } on PlatformException catch (e) {
+      print(e);
+    }
   }
 }
