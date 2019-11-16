@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/utils/permissions.dart';
+import 'package:ksp/views/SignUp.dart';
 
 class GetStarted extends StatefulWidget {
   @override
@@ -73,7 +74,7 @@ class _GetStartedState extends State<GetStarted> with ColorConfig {
   }
 
   _gotoLogin() {
-    // Navigator.of(context)
-    //     .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => SignupPage()));
   }
 }

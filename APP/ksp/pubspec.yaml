@@ -18,6 +18,8 @@ dependencies:
   firebase_storage: ^3.0.8
   cloud_firestore: ^0.12.10
   permission_handler: ^4.0.0
+  rxdart: ^0.22.6
+  bottom_navy_bar: ^5.2.0
 
 dev_dependencies:
   flutter_test:
