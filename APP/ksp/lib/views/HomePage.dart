@@ -2,7 +2,6 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/views/ChatHome.dart';
-import 'package:ksp/views/ChatScreen.dart';
 
 class HomePage extends StatefulWidget {
   @override

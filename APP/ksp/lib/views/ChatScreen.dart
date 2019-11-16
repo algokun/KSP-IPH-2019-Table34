@@ -84,6 +84,7 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
             .collection("messages")
             .document(getHashId())
             .collection("chats")
+            .orderBy('timeStamp', descending: false)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return LinearProgressIndicator();
@@ -109,25 +110,22 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     return ListView(
       controller: _scrollController,
-      padding: const EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.all(10.0),
       children: snapshot.map((data) => _buildListItem(context, data)).toList(),
     );
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final message = MessageModel.fromSnapShot(data);
-    final key = ValueKey(data.documentID);
     if (message.idFrom == uid) {
       return MessageView(
-        model: message,
+        message: message,
         alignment: Alignment.centerRight,
-        key: key,
       );
     } else {
       return MessageView(
-        model: message,
-        alignment: Alignment.centerRight,
-        key: key,
+        message: message,
+        alignment: Alignment.centerLeft,
       );
     }
   }
