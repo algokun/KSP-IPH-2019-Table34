@@ -14,10 +14,23 @@ class Task {
 
   factory Task.fromSnapShot(DocumentSnapshot snapshot) {
     return Task(
+      title: snapshot.data['title'],
+      description: snapshot.data['description'],
       assignedBy: snapshot.data['assignedBy'],
       assignedTo: snapshot.data['assignedTo'],
       timeStamp: snapshot.data['timeStamp'],
       isCompleted: snapshot.data['isCompleted'],
     );
+  }
+
+  toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'assignedBy': assignedBy,
+      'assignedTo': assignedTo,
+      'timeStamp': timeStamp,
+      'isCompleted': isCompleted,
+    };
   }
 }

@@ -15,6 +15,7 @@ class CompletedTasks extends StatelessWidget {
           .where('isCompleted', isEqualTo: true)
           .snapshots(),
       builder: (context, snapshot) {
+        if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
         return _buildList(context, snapshot.data.documents);
       },
     );

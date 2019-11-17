@@ -9,7 +9,7 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
