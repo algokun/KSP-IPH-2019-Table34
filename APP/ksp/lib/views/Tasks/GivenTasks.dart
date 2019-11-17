@@ -15,7 +15,8 @@ class GivenTasks extends StatelessWidget {
           .where('isCompleted', isEqualTo: false)
           .snapshots(),
       builder: (context, snapshot) {
-        if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
+        if (!snapshot.hasData)
+          return Center(child: CircularProgressIndicator());
         return _buildList(context, snapshot.data.documents);
       },
     );
@@ -30,14 +31,40 @@ class GivenTasks extends StatelessWidget {
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final record = Task.fromSnapShot(data);
-    return ListTile(
+    return ExpansionTile(
       leading: Checkbox(
         value: record.isCompleted,
         activeColor: Colors.orange,
-        onChanged: (v) {},
+        onChanged: (v) {
+          
+        },
       ),
       title: Text(record.title),
-      subtitle: Text(record.description),
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+          alignment: Alignment.centerLeft,
+          child: Text.rich(TextSpan(children: [
+            TextSpan(
+                text: 'Description\n',
+                style: Theme.of(context).textTheme.subhead),
+            TextSpan(
+                text: record.description,
+                style: Theme.of(context).textTheme.subtitle),
+            TextSpan(
+                text: '\n\nAssigned By\n',
+                style: Theme.of(context).textTheme.subhead),
+            TextSpan(
+                text: record.assignedByName,
+                style: Theme.of(context).textTheme.subtitle),
+            TextSpan(
+                text: '\n\nTime\n', style: Theme.of(context).textTheme.subhead),
+            TextSpan(
+                text: record.timeStamp,
+                style: Theme.of(context).textTheme.subtitle),
+          ])),
+        )
+      ],
     );
   }
 }

@@ -111,6 +111,7 @@ class _CreateTaskState extends State<CreateTask> with ColorConfig {
     FirebaseUser user = Provider.of<FirebaseUser>(context);
     Task task = Task(
         assignedBy: user.uid,
+        assignedByName: user.displayName,
         assignedTo: selectedUserId,
         description: descController.text,
         timeStamp: DateTime.now().toString(),

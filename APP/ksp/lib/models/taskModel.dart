@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Task {
-  final String assignedBy, assignedTo, timeStamp, title, description;
+  final String assignedBy,
+      assignedTo,
+      timeStamp,
+      title,
+      description,
+      assignedByName;
   final bool isCompleted;
 
   Task(
@@ -10,6 +15,7 @@ class Task {
       this.timeStamp,
       this.isCompleted,
       this.description,
+      this.assignedByName,
       this.title});
 
   factory Task.fromSnapShot(DocumentSnapshot snapshot) {
@@ -20,6 +26,7 @@ class Task {
       assignedTo: snapshot.data['assignedTo'],
       timeStamp: snapshot.data['timeStamp'],
       isCompleted: snapshot.data['isCompleted'],
+      assignedByName: snapshot.data['assignedByName'],
     );
   }
 
@@ -31,6 +38,7 @@ class Task {
       'assignedTo': assignedTo,
       'timeStamp': timeStamp,
       'isCompleted': isCompleted,
+      'assignedByName': assignedByName,
     };
   }
 }
