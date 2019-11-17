@@ -112,3 +112,52 @@ exports.sendSecureMsgNotification = functions.firestore
           });
       });
   });
+
+// exports.deleteMessages = functions
+//   .runWith({
+//     memory: "2GB"
+//   })
+//   .pubsub.schedule("* * * * *")
+//   .onRun(async context => {
+//     const timeNow = new Date(Date.now().toString());
+//     const messagesRef = await admin
+//       .firestore()
+//       .collectionGroup("chats")
+//       .get();
+
+//     messagesRef.forEach(each => {
+//       const time = new Date(each.data().timeStamp);
+//       const diff = timeNow.getTime() - time.getTime();
+//       var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+
+//       if (seconds <= 36000) {
+//         each.ref.update({
+//           isExpired: true
+//         });
+//       }
+//     });
+//   });
+
+  exports.deleteOldMessages = functions
+  .https.onRequest(async (req , res) => {
+    const timeNow = new Date();
+    const messagesRef = await admin
+      .firestore()
+      .collectionGroup("chats")
+      .get();
+
+    messagesRef.forEach(each => {
+      const time = new Date(each.data().timeStamp);
+      const diff = timeNow.getTime() - time.getTime();
+      var seconds = diff / 1000;
+      console.log("WOriking")
+      console.log(seconds);
+      
+      if (seconds > 36000) {
+        each.ref.update({
+          isExpired: true
+        });
+      }
+    });
+    return res.status(200).end();
+  });

@@ -155,6 +155,7 @@ class _SecureChatScreenState extends State<SecureChatScreen> with ColorConfig {
         type: '0',
         idFrom: uid,
         isSecure: true,
+        isExpired: false,
         idTo: widget.peerId,
         timeStamp: DateTime.now().toString());
 

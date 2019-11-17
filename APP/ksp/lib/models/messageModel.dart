@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageModel {
   final String idFrom, idTo, type, content, timeStamp;
-  final bool isSecure;
+  final bool isSecure, isExpired;
 
   MessageModel(
       {this.idFrom,
       this.idTo,
       this.type,
+      this.isExpired,
       this.content,
       this.timeStamp,
       this.isSecure});
@@ -20,6 +21,7 @@ class MessageModel {
       timeStamp: snapshot.data['timeStamp'],
       type: snapshot.data['type'],
       isSecure: snapshot.data['isSecure'] ?? false,
+      isExpired: snapshot.data['isExpired'] ?? false,
     );
   }
 
@@ -30,7 +32,8 @@ class MessageModel {
       "idTo": idTo,
       "timeStamp": timeStamp,
       "type": type,
-      "isSecure": isSecure ?? false
+      "isSecure": isSecure ?? false,
+      "isExpired": isExpired ?? false
     };
   }
 }

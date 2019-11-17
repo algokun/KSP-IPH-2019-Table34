@@ -47,12 +47,12 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
               icon: Icon(Icons.attach_file),
               onPressed: () {
                 SendFile(
-                  context: context,
-                  hashId: getHashId(),
-                  idFrom: uid,
-                  idTo: widget.peerId,
-                  isSecure: false
-                ).showSendDialog();
+                        context: context,
+                        hashId: getHashId(),
+                        idFrom: uid,
+                        idTo: widget.peerId,
+                        isSecure: false)
+                    .showSendDialog();
               }),
         ],
       ),
@@ -100,8 +100,9 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
             .collection("messages")
             .document(getHashId())
             .collection("chats")
-            .orderBy('timeStamp', descending: false)
             .where('isSecure', isEqualTo: false)
+            .where('isExpired', isEqualTo: false)
+            .orderBy('timeStamp', descending: false)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return LinearProgressIndicator();
@@ -164,6 +165,7 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
         type: '0',
         idFrom: uid,
         isSecure: false,
+        isExpired: false,
         idTo: widget.peerId,
         timeStamp: DateTime.now().toString());
 
