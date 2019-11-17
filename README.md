@@ -19,7 +19,8 @@ have implemented is:
 
 1. Flutter SDK (Ver 1.9.1) - https://flutter.dev/docs/get-started/install.
 2. Firebase - https://firebase.google.com.
-
+3. Cron Jobs 
+4. Figma for UI - https://www.figma.com
 
 
 # Configure 
