@@ -98,7 +98,9 @@ class _SendPhotoViewState extends State<SendPhotoView> {
           .document(widget.hashId)
           .collection("chats")
           .add(message.toMap())
-          .then((_) {});
+          .then((_) {
+        Navigator.of(context).pop();
+      });
     });
   }
 }

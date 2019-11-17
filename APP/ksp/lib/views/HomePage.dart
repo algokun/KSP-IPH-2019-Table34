@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/utils/fcm.dart';
+import 'package:ksp/views/Tasks/DummyTasks.dart';
 import 'package:provider/provider.dart';
 
 import 'Chats/ChatHome.dart';
@@ -21,7 +22,6 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
     initialPage: 0,
     keepPage: true,
   );
-  
 
   @override
   void initState() {
@@ -48,9 +48,6 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
 
     return Scaffold(
         backgroundColor: background,
-        appBar: AppBar(
-          title: Text("Home"),
-        ),
         body: PageView(
           controller: _pageController,
           onPageChanged: (index) {
@@ -61,9 +58,7 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
             Container(
               child: Text("Its me"),
             ),
-            Container(
-              child: Text("Its me"),
-            ),
+            TaskList(),
             Container(
               child: Text("Mohan"),
             ),
@@ -89,8 +84,8 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
                 title: Text('Groups'),
                 activeColor: Colors.purpleAccent),
             BottomNavyBarItem(
-                icon: Icon(Icons.notifications),
-                title: Text('Notifications'),
+                icon: Icon(Icons.timer),
+                title: Text('Tasks'),
                 activeColor: Colors.pink),
             BottomNavyBarItem(
                 icon: Icon(Icons.track_changes),
@@ -105,6 +100,4 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
       _selectedIndex = index;
     });
   }
-
-  
 }
