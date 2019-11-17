@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/models/profileModel.dart';
+import 'package:ksp/views/SecureChat/SecureChat.dart';
 import 'package:provider/provider.dart';
 
 import 'SecureChatScreen.dart';
@@ -16,7 +17,18 @@ class _SecureChatHomeState extends State<SecureChatHome> with ColorConfig {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Secure Chat"),
+      ),
       backgroundColor: background,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        tooltip: 'Create Secured Chat',
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => SecureChat()));
+        },
+      ),
       body: _buildBody(context),
     );
   }

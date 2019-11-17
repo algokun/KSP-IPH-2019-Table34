@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/utils/fcm.dart';
-import 'package:ksp/views/SecureChat/SecureChat.dart';
 import 'package:provider/provider.dart';
 
 import 'Chats/ChatHome.dart';
-import 'Chats/CreateChat.dart';
 import 'package:local_auth/local_auth.dart';
+
+import 'SecureChat/SecureChatHomeScreen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
     keepPage: true,
   );
   LocalAuthentication localAuthentication = LocalAuthentication();
-  String _selected = "";
 
   @override
   void initState() {
@@ -81,14 +80,6 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          tooltip: 'Create Chat',
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => CreateChat()));
-          },
-        ),
         bottomNavigationBar: BottomNavyBar(
           backgroundColor: lowContrast,
           selectedIndex: _selectedIndex,
@@ -133,7 +124,7 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
               localizedReason: 'Please authenticate to show account balance');
       if (didAuthenticate) {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => SecureChat()));
+            .push(MaterialPageRoute(builder: (_) => SecureChatHome()));
       }
     } on PlatformException catch (e) {
       print(e);

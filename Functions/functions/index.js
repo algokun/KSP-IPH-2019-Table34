@@ -12,6 +12,7 @@ exports.sendMessageNotification = functions.firestore
     const content = snapshot.data().content;
     const idFrom = snapshot.data().idFrom;
     const idTo = snapshot.data().idTo;
+    const isSecure = snapshot.data().isSecure;
 
     var userRef = admin
       .firestore()
@@ -41,17 +42,19 @@ exports.sendMessageNotification = functions.firestore
               }
             };
 
-            return admin
-              .messaging()
-              .sendToDevice(token, paylod)
-              .then(value => {
-                console.log("pushed");
-                return "Pushed";
-              })
-              .catch(err => {
-                console.log(err);
-                console.log("Failed");
-              });
+            return isSecure
+              ? null
+              : admin
+                  .messaging()
+                  .sendToDevice(token, paylod)
+                  .then(value => {
+                    console.log("pushed");
+                    return "Pushed";
+                  })
+                  .catch(err => {
+                    console.log(err);
+                    console.log("Failed");
+                  });
           });
       });
   });

@@ -187,8 +187,8 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
   createProfile() async{
     FirebaseUser user = Provider.of<FirebaseUser>(context);
     UserUpdateInfo info = UserUpdateInfo();
-    info.displayName = "name";
-    info.photoUrl = "phone";
+    info.displayName = profileName.text;
+    info.photoUrl = phoneController.text;
     await user.updateProfile(info);
     await Profile(context).createProfile(ProfileModel(
         name: profileName.text,

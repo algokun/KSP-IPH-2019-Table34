@@ -6,6 +6,7 @@ import 'package:ksp/models/profileModel.dart';
 import 'package:provider/provider.dart';
 
 import 'ChatScreen.dart';
+import 'CreateChat.dart';
 
 class ChatHome extends StatefulWidget {
   @override
@@ -17,6 +18,14 @@ class _ChatHomeState extends State<ChatHome> with ColorConfig {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        tooltip: 'Create Chat',
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => CreateChat()));
+        },
+      ),
       body: _buildBody(context),
     );
   }

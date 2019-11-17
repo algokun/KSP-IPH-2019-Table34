@@ -11,6 +11,7 @@ class SecureChat extends StatefulWidget {
 }
 
 class _SecureChatState extends State<SecureChat> with ColorConfig {
+  bool isProgressVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,23 +64,24 @@ class _SecureChatState extends State<SecureChat> with ColorConfig {
                   .title
                   .copyWith(color: Colors.white),
             ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-            ),
-            onTap: () {
-              
-            },
+            trailing: isProgressVisible
+                ? CircularProgressIndicator()
+                : Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                  ),
+            onTap: createSecureChat(record),
           ),
         ),
       ),
     );
   }
 
-  createSecureChat(ProfileModel model) {
+  createSecureChat(ProfileModel model) async {
+    setProgress();
     FirebaseUser user = Provider.of<FirebaseUser>(context);
     var uid = user.uid;
-    Firestore.instance
+    await Firestore.instance
         .collection("secure-chat")
         .document(uid)
         .collection("users")
@@ -87,8 +89,8 @@ class _SecureChatState extends State<SecureChat> with ColorConfig {
         .setData({
       'name': model.name,
       'uid': model.uid,
-    }).then((_) {
-      Firestore.instance
+    }).then((_) async {
+      await Firestore.instance
           .collection("secure-chat")
           .document(model.uid)
           .collection("users")
@@ -96,7 +98,15 @@ class _SecureChatState extends State<SecureChat> with ColorConfig {
           .setData({
         'name': user.displayName,
         'uid': user.uid,
+      }).then((_) {
+        setProgress();
       });
+    });
+  }
+
+  setProgress() {
+    setState(() {
+      isProgressVisible = !isProgressVisible;
     });
   }
 }

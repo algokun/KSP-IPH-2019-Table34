@@ -75,10 +75,10 @@ class _CreateChatState extends State<CreateChat> with ColorConfig {
     );
   }
 
-  createChat(ProfileModel model) {
+  createChat(ProfileModel model) async {
     FirebaseUser user = Provider.of<FirebaseUser>(context);
     var uid = user.uid;
-    Firestore.instance
+    await Firestore.instance
         .collection("chats")
         .document(uid)
         .collection("users")
@@ -86,15 +86,15 @@ class _CreateChatState extends State<CreateChat> with ColorConfig {
         .setData({
       'name': model.name,
       'uid': model.uid,
-    }).then((_) {
-      Firestore.instance
+    }).then((_) async {
+      await Firestore.instance
           .collection("chats")
           .document(model.uid)
           .collection("users")
           .document(uid)
           .setData({
         'name': user.displayName,
-        'uid': user.uid,
+        'uid': uid,
       });
     });
   }
