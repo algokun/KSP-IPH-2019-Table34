@@ -27,7 +27,7 @@ have implemented is:
 
 1. Download Flutter SDK from given link.
 2. Download Android Studio - https://developer.android.com/
-3. After Downloading Both Configure Flutter SDK - https://www.youtube.com/watch?v=M3UfYS0bqhE
+3. After Downloading configure flutter  - https://www.youtube.com/watch?v=M3UfYS0bqhE
 4. Download Visual Studio Code and Import Project Folder and Setup your simulator or your android device and Build.
 
 
