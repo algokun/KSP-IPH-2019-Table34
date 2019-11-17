@@ -12,7 +12,7 @@ class YourTasks extends StatelessWidget {
       stream: Firestore.instance
           .collection("tasks")
           .where('assignedTo', isEqualTo: user.uid)
-          .where('isCompleted', isEqualTo: false)
+          .where('isVerified', isEqualTo: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)

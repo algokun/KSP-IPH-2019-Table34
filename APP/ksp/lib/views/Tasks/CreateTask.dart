@@ -116,6 +116,7 @@ class _CreateTaskState extends State<CreateTask> with ColorConfig {
         description: descController.text,
         timeStamp: DateTime.now().toString(),
         isCompleted: false,
+        isVerified: false,
         title: titleController.text);
 
     await Firestore.instance.collection("tasks").add(task.toMap()).then((_) {

@@ -12,7 +12,7 @@ class GivenTasks extends StatelessWidget {
       stream: Firestore.instance
           .collection("tasks")
           .where('assignedBy', isEqualTo: user.uid)
-          .where('isCompleted', isEqualTo: false)
+          .where('isVerified', isEqualTo: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
@@ -33,10 +33,10 @@ class GivenTasks extends StatelessWidget {
     final record = Task.fromSnapShot(data);
     return ExpansionTile(
       leading: Checkbox(
-        value: record.isCompleted,
+        value: record.isVerified,
         activeColor: Colors.orange,
         onChanged: (v) {
-          
+          data.reference.updateData({'isVerified': true});
         },
       ),
       title: Text(record.title),

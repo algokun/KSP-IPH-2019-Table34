@@ -7,7 +7,7 @@ class Task {
       title,
       description,
       assignedByName;
-  final bool isCompleted;
+  final bool isCompleted, isVerified;
 
   Task(
       {this.assignedBy,
@@ -15,6 +15,7 @@ class Task {
       this.timeStamp,
       this.isCompleted,
       this.description,
+      this.isVerified,
       this.assignedByName,
       this.title});
 
@@ -25,6 +26,7 @@ class Task {
       assignedBy: snapshot.data['assignedBy'],
       assignedTo: snapshot.data['assignedTo'],
       timeStamp: snapshot.data['timeStamp'],
+      isVerified: snapshot.data['isVerified'],
       isCompleted: snapshot.data['isCompleted'],
       assignedByName: snapshot.data['assignedByName'],
     );
@@ -39,6 +41,7 @@ class Task {
       'timeStamp': timeStamp,
       'isCompleted': isCompleted,
       'assignedByName': assignedByName,
+      'isVerified': isVerified,
     };
   }
 }
