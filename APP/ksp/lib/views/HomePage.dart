@@ -3,15 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/utils/fcm.dart';
 import 'package:provider/provider.dart';
 
 import 'Chats/ChatHome.dart';
-import 'package:local_auth/local_auth.dart';
-
-import 'SecureChat/SecureChatHomeScreen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,7 +21,7 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
     initialPage: 0,
     keepPage: true,
   );
-  LocalAuthentication localAuthentication = LocalAuthentication();
+  
 
   @override
   void initState() {
@@ -54,13 +50,6 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
         backgroundColor: background,
         appBar: AppBar(
           title: Text("Home"),
-          actions: <Widget>[
-            FlatButton.icon(
-              label: Text("Secure Chat"),
-              icon: Icon(Icons.lock),
-              onPressed: openSecureChat,
-            )
-          ],
         ),
         body: PageView(
           controller: _pageController,
@@ -91,13 +80,13 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
           }),
           items: [
             BottomNavyBarItem(
-              icon: Icon(Icons.apps),
-              title: Text('Home'),
+              icon: Icon(Icons.message),
+              title: Text('Chats'),
               activeColor: Colors.white,
             ),
             BottomNavyBarItem(
-                icon: Icon(Icons.people),
-                title: Text('Users'),
+                icon: Icon(Icons.group),
+                title: Text('Groups'),
                 activeColor: Colors.purpleAccent),
             BottomNavyBarItem(
                 icon: Icon(Icons.notifications),
@@ -117,17 +106,5 @@ class _HomePageState extends State<HomePage> with ColorConfig, FCMHandler {
     });
   }
 
-  openSecureChat() async {
-    try {
-      bool didAuthenticate =
-          await localAuthentication.authenticateWithBiometrics(
-              localizedReason: 'Please authenticate to show account balance');
-      if (didAuthenticate) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => SecureChatHome()));
-      }
-    } on PlatformException catch (e) {
-      print(e);
-    }
-  }
+  
 }

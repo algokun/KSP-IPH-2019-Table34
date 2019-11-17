@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/models/messageModel.dart';
+import 'package:ksp/utils/sendFile.dart';
 import 'package:ksp/views/Message.dart';
+import 'package:ksp/views/SecureChat/SecureChatHomeScreen.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -15,6 +19,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> with ColorConfig {
+  LocalAuthentication localAuthentication = LocalAuthentication();
   String uid;
   TextEditingController controller;
   ScrollController _scrollController;
@@ -33,11 +38,22 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
       appBar: AppBar(
         title: Text(widget?.name),
         actions: <Widget>[
+          FlatButton.icon(
+            label: Text("Secure Chat"),
+            icon: Icon(Icons.lock),
+            onPressed: openSecureChat,
+          ),
           IconButton(
               icon: Icon(Icons.attach_file),
               onPressed: () {
-                print("object");
-              })
+                SendFile(
+                  context: context,
+                  hashId: getHashId(),
+                  idFrom: uid,
+                  idTo: widget.peerId,
+                  isSecure: false
+                ).showSendDialog();
+              }),
         ],
       ),
       backgroundColor: background,
@@ -159,5 +175,19 @@ class _ChatScreenState extends State<ChatScreen> with ColorConfig {
         .then((_) {
       controller.text = "";
     });
+  }
+
+  openSecureChat() async {
+    try {
+      bool didAuthenticate =
+          await localAuthentication.authenticateWithBiometrics(
+              localizedReason: 'Please authenticate to show account balance');
+      if (didAuthenticate) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => SecureChatHome()));
+      }
+    } on PlatformException catch (e) {
+      print(e);
+    }
   }
 }

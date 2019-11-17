@@ -97,6 +97,7 @@ class _CreateProfileState extends State<CreateProfile> with ColorConfig {
               return null;
             }
           },
+          keyboardType: TextInputType.phone,
           decoration: new InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
               border: new OutlineInputBorder(

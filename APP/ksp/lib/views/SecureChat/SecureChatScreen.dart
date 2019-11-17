@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ksp/config/colors.dart';
 import 'package:ksp/models/messageModel.dart';
+import 'package:ksp/utils/sendFile.dart';
 import 'package:ksp/views/Message.dart';
 import 'package:provider/provider.dart';
 
@@ -36,8 +37,14 @@ class _SecureChatScreenState extends State<SecureChatScreen> with ColorConfig {
           IconButton(
               icon: Icon(Icons.attach_file),
               onPressed: () {
-                print("object");
-              })
+                SendFile(
+                        context: context,
+                        hashId: getHashId(),
+                        idFrom: uid,
+                        idTo: widget.peerId,
+                        isSecure: true)
+                    .showSendDialog();
+              }),
         ],
       ),
       backgroundColor: background,

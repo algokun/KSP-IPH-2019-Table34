@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ksp/models/messageModel.dart';
 
+import 'PhotoView.dart';
+
 class MessageView extends StatelessWidget {
   MessageView({this.message, this.alignment});
 
@@ -28,7 +30,14 @@ class MessageView extends StatelessWidget {
     final time = DateTime.parse(message.timeStamp);
     switch (message.type) {
       case '1':
-        return Image.network(message.content);
+        return ImageBubble(
+            align: align,
+            bg: bg,
+            radius: radius,
+            message: message,
+            time: time,
+            icon: icon,
+            isMe: isMe);
         break;
       default:
         return Bubble(
@@ -110,6 +119,84 @@ class Bubble extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ImageBubble extends StatelessWidget {
+  const ImageBubble({
+    Key key,
+    @required this.align,
+    @required this.bg,
+    @required this.radius,
+    @required this.message,
+    @required this.time,
+    @required this.icon,
+    @required this.isMe,
+  }) : super(key: key);
+
+  final CrossAxisAlignment align;
+  final Color bg;
+  final BorderRadius radius;
+  final MessageModel message;
+  final DateTime time;
+  final IconData icon;
+  final bool isMe;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (c) => PhotoNetwork(url: message.content)));
+      },
+      child: Column(
+        crossAxisAlignment: align,
+        children: <Widget>[
+          Container(
+            margin: const EdgeInsets.all(3.0),
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: .5,
+                    spreadRadius: 1.0,
+                    color: Colors.black.withOpacity(.12))
+              ],
+              color: bg,
+              borderRadius: radius,
+            ),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(right: 60.0),
+                  width: 250,
+                  child: Image.network(message.content),
+                ),
+                Positioned(
+                  bottom: 0.0,
+                  right: 0.0,
+                  child: Row(
+                    children: <Widget>[
+                      Text("${time.hour} : ${time.minute}",
+                          style: TextStyle(
+                            color: Colors.black38,
+                            fontSize: 10.0,
+                          )),
+                      SizedBox(width: 3.0),
+                      Icon(
+                        icon,
+                        size: !isMe ? 12.0 : 0,
+                        color: Colors.black38,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

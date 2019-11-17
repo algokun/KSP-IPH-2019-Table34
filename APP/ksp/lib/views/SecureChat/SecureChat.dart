@@ -70,7 +70,9 @@ class _SecureChatState extends State<SecureChat> with ColorConfig {
                     Icons.arrow_forward_ios,
                     color: Colors.white,
                   ),
-            onTap: createSecureChat(record),
+            onTap: () async{
+              await createSecureChat(record);
+            },
           ),
         ),
       ),
